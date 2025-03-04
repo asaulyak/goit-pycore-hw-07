@@ -1,3 +1,5 @@
+from address_book import AddressBook, Record
+
 COMMAND_NAME = 'add'
 
 def input_error(func):
@@ -6,14 +8,13 @@ def input_error(func):
             return func(*args, **kwargs)
         except ValueError as e:
             message = f'Failed to add contact: {e}'
-            context = args[1]
 
-            return message, context, False
+            return message, False
 
     return inner
 
 @input_error
-def run(args, context):
+def run(args, context: AddressBook):
     stop = False
 
     if len(args) < 2:
@@ -30,9 +31,11 @@ def run(args, context):
     if not phone.isdigit():
         raise ValueError("Invalid phone number.")
 
-    contact = {name: phone}
+    contact = Record(name)
+    contact.add_phone(phone)
 
     message = "Contact added."
-    updated_context = {**context, **contact}
 
-    return message, updated_context, stop
+    context.add_record(contact)
+
+    return message, stop
