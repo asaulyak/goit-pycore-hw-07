@@ -1,43 +1,41 @@
+from address_book import AddressBook
+
 COMMAND_NAME = 'change'
 
 def input_error(func):
     def inner(*args, **kwargs):
-        context = args[1]
-
         try:
             return func(*args, **kwargs)
         except IndexError as e:
             message = f'Invalid contact: {e}'
 
-            return message, context, False
+            return message, False
         except ValueError as e:
             message = f'Failed to update contact: {e}'
 
-            return message, context, False
+            return message, False
 
     return inner
 
 @input_error
-def run(args, context):
+def run(args, context: AddressBook):
     stop = False
 
-    if len(args) < 2:
-        raise ValueError("Give me name and phone please.")
+    if len(args) < 3:
+        raise ValueError("Give me name, old phone and new phone please.")
 
-    name, phone = args
+    name, old_phone, phone = args
 
-    if not name or not phone:
-        raise ValueError("Give me name and phone please.")
+    if not name or not phone or not old_phone:
+        raise ValueError("Give me name, old phone and new phone please.")
 
-    if name not in context:
+    contact = context.find(name)
+
+    if not contact:
         raise IndexError("Contact not found.")
 
-    if not phone.isdigit():
-        raise ValueError("Invalid phone number")
-
-    contact = {name: phone}
+    contact.edit_phone(old_phone, phone)
 
     message = "Contact updated."
-    updated_context = {**context, **contact}
 
-    return message, updated_context, stop
+    return message, stop

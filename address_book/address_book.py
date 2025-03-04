@@ -1,4 +1,5 @@
 from collections import UserDict
+from .record import Record
 
 
 class AddressBook(UserDict):
@@ -6,12 +7,8 @@ class AddressBook(UserDict):
         self.data[record.name.value] = record
 
 
-    def find(self, name):
-        for record in self.data.values():
-            if record.name.value == name:
-                return record
-
-        return None
+    def find(self, name, default = None) -> Record:
+        return self.data.get(name, default)
 
 
     def delete(self, name):

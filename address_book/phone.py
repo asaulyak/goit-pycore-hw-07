@@ -2,11 +2,13 @@ from .field import Field
 
 class Phone(Field):
     def __init__(self, value):
-        if not self.__validate(value):
-            raise ValueError('Invalid phone number')
+        self._validate(value)
 
         super().__init__(value)
 
-    def __validate(self, value):
-        return len(value) == 10 and value.isdigit()
+    def _validate(self, value):
+        valid = len(value) == 10 and value.isdigit()
+
+        if not valid:
+            raise ValueError('Invalid phone number')
 
