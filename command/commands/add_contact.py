@@ -31,7 +31,7 @@ def run(args, context: AddressBook):
     if not phone.isdigit():
         raise ValueError("Invalid phone number.")
 
-    contact = Record(name)
+    contact = context.get(name, Record(name))
     contact.add_phone(phone)
 
     message = "Contact added."
