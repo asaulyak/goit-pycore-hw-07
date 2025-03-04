@@ -23,11 +23,11 @@ def load_commands():
 
 packages = load_commands()
 
-def default_command(_, context):
+def default_command(_, __):
     message = "Invalid command."
     stop = False
 
-    return message, context, stop
+    return message, stop
 
 def get_command(command_name):
 
