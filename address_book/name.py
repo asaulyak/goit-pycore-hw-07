@@ -1,4 +1,6 @@
 from .field import Field
 
 class Name(Field):
-    pass
+    def _validate(self, value):
+        if not value.strip():
+            raise ValueError('Name cannot be empty')

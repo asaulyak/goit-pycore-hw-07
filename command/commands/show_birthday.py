@@ -1,6 +1,6 @@
 from address_book import AddressBook
 
-COMMAND_NAME = 'phone'
+COMMAND_NAME = 'show-birthday'
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -33,6 +33,6 @@ def run(args, context: AddressBook):
     if not contact:
         raise IndexError("Contact not found.")
 
-    message = '; '.join(str(phone) for phone in contact.phones)
+    message = str(contact.birthday) if contact.birthday else "(birthday not set)"
 
     return message, stop

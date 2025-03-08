@@ -1,5 +1,6 @@
 class Field:
     def __init__(self, value):
+        self._validate(value)
         self.value = value
 
 
