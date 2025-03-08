@@ -12,3 +12,6 @@ class Phone(Field):
         if not valid:
             raise ValueError('Invalid phone number')
 
+
+    def __str__(self):
+        return f'({self.value[:3]}) {self.value[3:6]}-{self.value[6:]}'
