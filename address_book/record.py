@@ -5,12 +5,16 @@ from .phone import Phone
 class Record:
     def __init__(self, name):
         self.name = Name(name)
-        self.phones = []
+        self.phones = set()
 
     def add_phone(self, phone):
-        self.phones.append(Phone(phone))
+        self.phones.add(Phone(phone))
 
     def edit_phone(self, phone_number, new_phone):
+        new_phone_exists = bool(self.find_phone(new_phone))
+        if new_phone_exists:
+            raise KeyError(f"Phone number {new_phone} already exists")
+
         for p in self.phones:
             if p.value == phone_number:
                 p.update(new_phone)

@@ -15,6 +15,11 @@ def input_error(func):
 
             return message, False
 
+        except KeyError as e:
+            message = f'Failed to update phone: {e}'
+
+            return message, False
+
     return inner
 
 @input_error
